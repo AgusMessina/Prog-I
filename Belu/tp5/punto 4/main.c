@@ -5,12 +5,11 @@
 
 char comparar(char s1[], char s2[], int pos){
 
-    if(strlen(s1) == pos)
+    if(s1[pos] != s2[pos])
         return 0;
-    else{
-        if(s1[pos] == s2[pos])
+
+    if(s1[pos] == '\0' && s2[pos] == '\0')
             return 1;
-    }
 
     return comparar(s1, s2, pos+1);
 }
