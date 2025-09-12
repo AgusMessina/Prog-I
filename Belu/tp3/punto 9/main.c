@@ -1,56 +1,78 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define M 14
+#define M 13
 
-float carganota(float notas[], int *canttotal){
-    int i, n;
-
-    printf("Cuantas notas quiere cargar?\n");
-    scanf("%d", &n);
-
-    canttotal = canttotal + n;
-    for(i = 0; i < canttotal; i++){
-        printf("Ingrese nota %d:\n", i+1);
-        scanf("%f", &notas[i]);
-    }
-}
-
-void muestranota(float notas[], int *canttotal){
+void CargaNota(int notas[], int n, int *cant){
     int i;
-    for(i = 0; i < canttotal; i++){
-        printf("Nota %d:\n", i+1);
+
+    printf("Ingrese la cantidad de notas que quiere cargar:\n");
+    scanf("%d", &n);
+    while(n > M){
+        printf("Excede la capacidad. Ingrese nuevamente\n");
+        scanf("%d", &n);
+    }
+
+    int total = *cant + n;
+
+    if(total > M)
+        printf("Excede la cantidad de lugares.\n");
+    else{
+        for(i = *cant; i < total; i++){
+            printf("Ingrese la nota %d:\n", i+1);
+            scanf("%d", &notas[i]);
+            getchar();
+            while(notas[i] < 0 || notas[i] > 10){
+                printf("Debe ser entre 1 y 10\n");
+                scanf("%d", &notas[i]);
+                getchar();
+            }
+        }
+        *cant = total;
     }
 }
 
-int aplazos(float notas[], int *canttotal){
-    int i, acum = 0;
-    for(i = 0; i < canttotal; i++){
-        if(notas[i] <= 3)
-            acum++;
+void MuestraNota(int notas[], int *cant){
+    int i;
+
+    if(*cant == 0)
+        printf("No hay notas cargadas\n");
+    else{
+        for(i = 0; i < *cant; i++){
+            printf("Nota num %d: %d\n", i+1, notas[i]);
+        }
     }
-    if(acum >= 7)
-        printf("Alta Posibilidad de Repetir...\n");
-    return acum;
+}
+
+int Aplazos(int notas[], int *cant){
+    int i, rep = 0;
+
+    if(*cant == 0)
+        printf("No hay notas cargadas\n");
+    else{
+    for(i = 0; i < *cant; i++){
+        if(notas[i] < 4)
+            rep++;
+    }
+    if(rep >= 7)
+        printf("Alta Posibilidad de Repetir..");
+    }
+    return rep;
 }
 
 int main()
 {
-    float notas[M];
-    int opcion, canttotal = 0;
+    int notas[M];
+    int n, opcion, cant = 0;
 
     do{
-        printf("<1> Cargar notas\n <2> Mostrar notas\n <3> Aplazos\n <4> Salir\n");
+        printf("<1> Cargar\n<2> Mostrar\n<3> Aplazos\n<4> Salir\n");
         scanf("%d", &opcion);
         switch(opcion){
-            case 1: carganota(notas, &canttotal);
-                break;
-            case 2: muestranota(notas, &canttotal);
-                break;
-            case 3: printf("La cantidad de aplazo es %d", aplazos(notas, &canttotal));
-                break;
-            case 4: printf("Saliendo...\n");
-                break;
-            default: printf("pelotudo\n");
+            case 1: CargaNota(notas, n, &cant); break;
+            case 2: MuestraNota(notas, &cant); break;
+            case 3: printf("Cantidad de aplazos es: %d\n", Aplazos(notas, &cant)); break;
+            case 4: printf("Saliendo...\n"); break;
+            default: printf("Opcion invalida\n");
         }
     }while(opcion != 4);
 }
