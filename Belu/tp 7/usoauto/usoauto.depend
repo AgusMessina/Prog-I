@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1759244188 source:c:\users\usuario\desktop\usoauto\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"TDAauto.h"
+
+1759243394 c:\users\usuario\desktop\usoauto\tdaauto.h
+	<string.h>
+
