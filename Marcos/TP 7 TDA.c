@@ -1138,6 +1138,182 @@ int main() {
 
 
 
+EJERCICIO 7:
+HEADER
+
+#define N 100
+
+typedef struct {
+    char marca[30];
+    float precio;
+} Auto;
+
+void inic(Auto *a) {
+    a->precio = 0;
+}
+
+void set_precio(Auto *a, float p) {
+    a->precio = p;
+}
+
+float get_precio(Auto a) {
+    return a.precio;
+}
+
+void set_marca(Auto *a, char m[]) {
+    strcpy(a->marca, m);
+    /* strncpy(a->marca, m, 29);
+    a->marca[29] = '\0'; */
+}
+
+char* get_marca(Auto a) {
+    char *p = (char *)malloc(strlen(a.marca) + 1);
+    if (p == NULL) exit(1);
+    strcpy(p, a.marca);
+    return p;
+}
+
+
+typedef struct {
+    Auto datos[N];
+    int cur;     // cursor
+    int ultimo;  // índice del último elemento
+} ListaE;
+
+void initL(ListaE *l) {
+    l->ultimo = -1;
+    l->cur = 0;
+}
+
+int isOos(ListaE l) {
+    return l.cur > l.ultimo;
+}
+
+int isEmpty(ListaE l) {
+    return l.ultimo == -1;
+}
+
+int isFull(ListaE l) {
+    return l.ultimo == N - 1;
+}
+
+void reset(ListaE *l) {
+    l->cur = 0;
+}
+
+void forwards(ListaE *l) {
+    if (l->cur <= l->ultimo)
+        l->cur++;
+}
+
+int insertLista(ListaE *l, Auto elemento) {
+    if (isFull(*l)) return -1;
+
+    for (int i = l->ultimo; i >= l->cur; i--) {
+        l->datos[i + 1] = l->datos[i];
+    }
+    l->datos[l->cur] = elemento;
+    l->ultimo++;
+    return 1;
+}
+
+int supressLista(ListaE *l) {
+    if (isEmpty(*l)) return -1;
+    if (isOos(*l)) return -2;
+
+    for (int i = l->cur; i < l->ultimo; i++) {
+        l->datos[i] = l->datos[i + 1];
+    }
+    l->ultimo--;
+    return 1;
+}
+
+Auto copyLista(ListaE l) {
+    return l.datos[l.cur];
+}
+
+
+
+MAIN
+#include "ListaAuto.h"
+
+void mostrarAuto(Auto a) {
+    printf("Marca: %s, \nPrecio: $%.2f\n", a.marca, a.precio);
+}
+
+void imprimirLista(ListaE lista) {
+    if (isEmpty(lista)) {
+        printf("La lista de autos est%c vac%ca.\n", 160, 161);
+    } else{
+        printf("Lista completa de autos:\n");
+        reset(&lista);
+        int contador = 0;
+        while (!isOos(lista)) {
+        Auto a_temp = copyLista(lista);
+        printf("Auto %d:\n", contador + 1);
+        mostrarAuto(a_temp);
+        forwards(&lista);
+        contador++;
+        }
+    }
+}
+
+int main() {
+    ListaE lista;
+    initL(&lista);
+
+    Auto auto_temp;
+    int opcion;
+    char marca[30];
+    float precio;
+
+    do {
+        printf("\nMenu de Opciones\n");
+        printf("1. Ingresar auto\n");
+        printf("2. Eliminar auto\n");
+        printf("3. Imprimir lista de autos\n");
+        printf("4. Salir\n");
+        printf("Seleccione una opci%cn: ", 162);
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                printf("Ingrese la marca del auto: ");
+                scanf("%s", marca);
+                printf("Ingrese el precio del auto: ");
+                scanf("%f", &precio);
+                set_marca(&auto_temp, marca);
+                set_precio(&auto_temp, precio);
+                insertLista(&lista, auto_temp);
+                printf("Auto ingresado con %cxito.\n", 130);
+                break;
+            case 2:
+                if (isEmpty(lista)) {
+                    printf("La lista est%c vac%ca, no se puede eliminar autos.\n", 160, 161);
+                } else {
+                    supressLista(&lista);
+                    printf("el auto del final fue eliminado con %cxito.\n", 130);
+                }
+                break;
+            case 3:
+                if (isEmpty(lista)) {
+                    printf("La lista est%c vac%ca.\n", 160, 161);
+                } else {
+                    imprimirLista(lista);
+                }
+                break;
+            case 4:
+                printf("Saliendo...\n");
+                break;
+            default:
+                printf("Opci%cn no v%clida. Intente de nuevo.\n");
+                break;
+        }
+    } while (opcion != 4);
+
+    return 0;
+}
+
 
 
 
