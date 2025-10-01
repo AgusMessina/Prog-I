@@ -200,4 +200,135 @@ int main() {
 
 
 SIN FORMATO
+#define MAX_EMPLEADOS 100
 
+typedef struct {
+    char nomb[30];
+    char ape[30];
+    int antiguedad;
+} empleado;
+
+void guardarEmpleadosEnArchivo(empleado p[], int cant) {
+    FILE *archivo = fopen("empleados.dat", "wb");
+    if (archivo == NULL) {
+        perror("Error al abrir empleados.dat para escritura");
+        return;
+    }
+    fwrite(p, sizeof(empleado), cant, archivo);
+    fclose(archivo);
+    printf("Datos guardados en empleados.dat correctamente.\n");
+}
+
+int leerEmpleadosDesdeArchivoBinario(empleado nuevo[], int max) {
+    FILE *archivo = fopen("nuevo.dat", "rb");
+    if (archivo == NULL) {
+        perror("Error al abrir nuevo.dat para lectura");
+        return 0;
+    }
+    int leidos = fread(nuevo, sizeof(empleado), max, archivo);
+    fclose(archivo);
+    return leidos;
+}
+
+void mostrarEmpleados(empleado arr[], int cant) {
+    for (int i = 0; i < cant; i++) {
+        printf("Empleado %d: %s %s, Antig%cedad: %d\n", i + 1, arr[i].nomb, arr[i].ape, 129, arr[i].antiguedad);
+    }
+}
+
+empleado cargarEmpleado() {
+    empleado e;
+    printf("Ingrese nombre (sin espacios): ");
+    scanf(" %[^\n]", e.nomb);
+    printf("Ingrese apellido (sin espacios): ");
+    scanf(" %[^\n]", e.ape);
+    printf("Ingrese antigüedad: ");
+    scanf("%d", &e.antiguedad);
+    return e;
+}
+
+int main() {
+    empleado personal[MAX_EMPLEADOS];
+    empleado otro_personal[MAX_EMPLEADOS];
+    int cant_personal = 0;
+    int cant_otro_personal = 0;
+    int opcion;
+
+    FILE *archivo = fopen("nuevo.dat", "wb");
+    if (archivo == NULL) {
+        perror("Error al abrir nuevo.dat para escritura");
+        return 1;
+    }
+
+    empleado e1 = { "Marcos", "Lucero", 2 };
+    empleado e2 = { "Samay", "Ortiz", 5 };
+    empleado e3 = { "Ronaldo", "Ortega", 1 };
+
+    fwrite(&e1, sizeof(empleado), 1, archivo);
+    fwrite(&e2, sizeof(empleado), 1, archivo);
+    fwrite(&e3, sizeof(empleado), 1, archivo);
+
+    fclose(archivo);
+    printf("Archivo nuevo.dat creado en formato binario con datos de ejemplo.\n");
+
+    do {
+        printf("\nMENU\n");
+        printf("1. Agregar empleado al arreglo personal\n");
+        printf("2. Guardar arreglo personal en archivo binario empleados.dat\n");
+        printf("3. Leer empleados desde archivo binario nuevo.dat al arreglo otro_personal\n");
+        printf("4. Mostrar empleados personal\n");
+        printf("5. Mostrar empleados otro_personal\n");
+        printf("6. Salir\n");
+        printf("Elija opción: ");
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                if (cant_personal < MAX_EMPLEADOS) {
+                    personal[cant_personal++] = cargarEmpleado();
+                } else {
+                    printf("Arreglo \"personal\" lleno.\n");
+                }
+                break;
+            case 2:
+                if (cant_personal > 0) {
+                    guardarEmpleadosEnArchivo(personal, cant_personal);
+                } else {
+                    printf("No hay empleados en arreglo \"personal\" para guardar.\n");
+                }
+                break;
+            case 3:
+                cant_otro_personal = leerEmpleadosDesdeArchivoBinario(otro_personal, MAX_EMPLEADOS);
+                printf("%d empleados le%cdos desde nuevo.dat.\n", cant_otro_personal, 161);
+                break;
+            case 4:
+                if (cant_personal > 0) {
+                    mostrarEmpleados(personal, cant_personal);
+                } else {
+                    printf("No hay empleados en \"personal\" para mostrar.\n");
+                }
+                break;
+            case 5:
+                if (cant_otro_personal > 0) {
+                    mostrarEmpleados(otro_personal, cant_otro_personal);
+                } else {
+                    printf("No hay empleados le%cdos de archivo para mostrar.\n", 161);
+                }
+                break;
+            case 6:
+                printf("Saliendo...\n");
+                break;
+            default:
+                printf("Opci%cn inv%clida, intente nuevamente.\n", 162, 160);
+                break;
+        }
+
+    } while (opcion != 6);
+
+    return 0;
+}
+
+
+
+
+EJERCICIO 3:
