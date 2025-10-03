@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1759505147 source:c:\users\usuario\desktop\usopersona\main.c
+	<stdio.h>
+	<stdlib.h>
+	"TDApersona.h"
+
+1759505063 c:\users\usuario\desktop\usopersona\tdapersona.h
+	<string.h>
+
