@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1759852106 source:d:\documentos\pila\main.c
+	<stdio.h>
+	<stdlib.h>
+	"TDApila.h"
+
+1759852158 d:\documentos\pila\tdapila.h
+
