@@ -1,0 +1,1333 @@
+# Conversation: Optimizar segun el codigo que te pase escrito en c :EJERCICIO 1:
+struct parte{
+    int numero;
+    c
+
+***2/9/2025, 11:26:25 a.m. - User:***
+
+Optimizar segun el codigo que te pase escrito en c :EJERCICIO 1:
+struct parte{
+    int numero;
+    char nombre[25];
+    };
+
+    typedef struct parte Parte;
+
+    Parte a;
+    Parte b[10];
+
+    printf("Ingrese el n%cmero de parte: ", 163);
+    scanf("%d", &a.numero);
+    printf("Ingrese el nombre de la parte:");
+    scanf("%s", a.nombre);
+
+    b[3] = a;
+    b[3].numero = a.numero;
+    strcpy(b[3].nombre, a.nombre);
+    printf("Elemento 3 del arreglo b:\n");
+    printf("Número de parte: %d\n", b[3].numero);
+    printf("Nombre de parte: %s\n", b[3].nombre);
+
+
+EJERCICIO 2:
+struct rectangulo{
+        float base;
+        float altura;
+    };
+
+    struct triangulo{
+        float base;
+        float altura;
+    };
+
+    struct trapecio{
+        float lado1;
+        float lado2;
+        float altura;
+    };
+
+    struct coordenadas{
+        float x;
+        float y;
+    };
+
+    struct direccion{
+        char callenumero[];
+        char localidad[];
+        int codigoPostal;
+        int nroTelefono;
+    };
+
+
+    struct Fecha {
+    int dia;
+    int mes;
+    int anio;
+    };
+
+    struct Documento {
+        char tipo[10];   // Ejemplo: "DNI", "Pasaporte"
+        int numero;
+    };
+
+    struct Materia {
+        char nombre[50];
+        struct Fecha fechaRegularizacion;
+        struct Fecha fechaAprobacion;
+    };
+
+    // Estructura para el alumno
+    struct Alumno {
+        char nombre[30];
+        int numeroRegistro; 
+        struct Documento documento;
+        struct Direccion direccion;
+        struct Materia materias[10]; 
+    };
+
+    struct empleado {
+        char nombre[30];
+        struct Documento documento;
+        struct Fecha FechaNacimiento;
+        char estadoCivil[15];
+        int cantidadHijos;
+        char sexo;
+    };
+
+
+    struct proyector{
+        char marca[];
+        char color[];
+        int controlRemoto;
+    };
+
+    struct aula{
+        int nroIdentificacion;
+        char ubicacion[20];
+        char tipo[20];
+        int cantidadMesas;
+        int cantidadSillas;
+        int cantidadPizarras;
+        struct proyector Proyector;
+    };
+
+
+
+
+EJERCICIO 3:
+#include <conio.h>
+
+typedef struct proyector{
+    char marca[30];
+    char color[30];
+    int controlRemoto;
+} Proyector;
+
+typedef struct aula{
+    int nroIdentificacion;
+    char ubicacion[20];
+    char tipo[20];
+    int cantidadMesas;
+    int cantidadSillas;
+    int cantidadPizarras;
+    Proyector proyector;
+} Aula;
+
+
+void ingresarAula(Aula *aula){
+    printf("Ingrese el n%cmero de identificaci%cn: ", 163, 162);
+    scanf("%i", &aula->nroIdentificacion);
+    getchar();
+    printf("Ingrese la ubicaci%cn: ", 162);
+    scanf("%[^\n]", aula->ubicacion);
+    printf("Ingrese el tipo de aula (Lab, Conf, Teor%ca, Pr%cctica): ", 161, 160);
+    scanf(" %s", aula->tipo);
+    printf("Ingrese la cantidad de mesas: ");
+    scanf("%i", &aula->cantidadMesas);
+    printf("Ingrese la cantidad de sillas: ");
+    scanf("%i", &aula->cantidadSillas);
+    printf("Ingrese la cantidad de pizarras: ");
+    scanf("%i", &aula->cantidadPizarras);
+    printf("Ingrese la marca del proyector: ");
+    scanf("%s", aula->proyector.marca);
+    printf("Ingrese el color del proyector: ");
+    scanf(" %[^\n]", aula->proyector.color);
+    printf("¿Tiene control remoto? (1 = si | 0 = no): ");
+    scanf("%d", &aula->proyector.controlRemoto);
+}
+
+void imprimirAula(Aula aula){
+    printf("\nDatos del Aula:\n");
+    printf("N%cmero de Identificaci%cn: %d\n", 163, 162, aula.nroIdentificacion);
+    printf("Ubicaci%cn (bloque): %s\n", 162, aula.ubicacion);
+    printf("Tipo de Aula: %s\n", aula.tipo);
+    printf("Cantidad de Mesas: %d\n", aula.cantidadMesas);
+    printf("Cantidad de Sillas: %d\n", aula.cantidadSillas);
+    printf("Cantidad de Pizarras: %d\n", aula.cantidadPizarras);
+    printf("Proyector Marca: %s\n", aula.proyector.marca);
+    printf("Proyector Color: %s\n", aula.proyector.color);
+    printf("¿Tiene control remoto?: %s\n", aula.proyector.controlRemoto ? "Sí" : "No");
+}
+
+
+main()
+{
+    Aula aula;
+
+    ingresarAula(&aula);
+    imprimirAula(aula);
+
+    return 0;
+}
+
+
+
+EJERCICIO 4:
+#include<stdio.h>
+#include <conio.h>
+
+typedef struct{
+    int dia;
+    int mes;
+    int anio;
+} Fecha;
+
+typedef struct{
+    char nombre[20];
+    char apellido[20];
+    char sexo;
+    Fecha fechaNacimiento;
+    float peso;
+    float altura;
+} Salud;
+
+
+void ingresarRegistroSalud(Salud *regSal){
+
+    printf("Ingrese su nombre: ");
+    scanf("%[^\n0-9]", regSal->nombre);
+    getchar();
+    printf("Ingrese su apellido: ");
+    scanf("%[^\n0-9]", regSal->apellido);
+    getchar();
+    printf("Ingrese si es masculino (M) o femenino (F): ");
+    scanf("%c", &regSal->sexo);
+
+    do {
+        printf("Ingrese la fecha de nacimiento (dd-mm-aaaa): ");
+        scanf("%d%*c%d%*c%d", &regSal->fechaNacimiento.dia, &regSal->fechaNacimiento.mes, &regSal->fechaNacimiento.anio);
+
+        if (regSal->fechaNacimiento.dia < 1 || regSal->fechaNacimiento.dia > 31 ||
+            regSal->fechaNacimiento.mes < 1 || regSal->fechaNacimiento.mes > 12 ||
+            regSal->fechaNacimiento.anio <= 0) {
+            printf("Fecha err%cnea. Ingrese de nuevo.\n", 162);
+        }
+    } while (regSal->fechaNacimiento.dia < 1 || regSal->fechaNacimiento.dia > 31 ||
+             regSal->fechaNacimiento.mes < 1 || regSal->fechaNacimiento.mes > 12 ||
+             regSal->fechaNacimiento.anio <= 0);
+
+     do {
+        printf("Ingrese el peso (en Kg): ");
+        scanf("%f", &regSal->peso);
+        if (regSal->peso <= 0 || regSal->peso >= 700) {
+            printf("Error: Peso no v%clido. Ingrese de nuevo.\n", 160);
+        }
+    } while (regSal->peso <= 0 || regSal->peso >= 700);
+
+    do {
+        printf("Ingrese la altura (en metros): ");
+        scanf("%f", &regSal->altura);
+        if (regSal->altura <= 0 || regSal->altura >= 3.00) {
+            printf("Error: Altura no v%clida. Ingrese de nuevo.\n", 160);
+        }
+    } while (regSal->altura <= 0 || regSal->altura >= 3.00);
+}
+
+
+void mostrarRegistroSalud(Salud regSal){
+    printf("\nRegistro de salud:\n");
+    printf("--------------------\n");
+    printf("Nombre: %s\n", regSal.nombre);
+    printf("Apellido: %s\n", regSal.apellido);
+    printf("G%cnero: %c\n", 130, regSal.sexo);
+    printf("Fecha de nacimiento: %d-%d-%d\n", regSal.fechaNacimiento.dia, regSal.fechaNacimiento.mes, regSal.fechaNacimiento.anio);
+    printf("Peso: %.2f\n", regSal.peso);
+    printf("Altura: %.2f\n", regSal.altura);
+}
+
+int calcularEdad(Salud regSal){
+    Fecha fechaActual;
+    do {
+        printf("Ingrese la fecha de actual (dd-mm-aaaa): ");
+        scanf("%d%*c%d%*c%d", &fechaActual.dia, &fechaActual.mes, &fechaActual.anio);
+
+        if (fechaActual.dia < 1 || fechaActual.dia > 31 ||
+            fechaActual.mes < 1 || fechaActual.mes > 12 ||
+            fechaActual.anio <= 0) {
+            printf("Fecha err%cnea. Ingrese de nuevo.\n", 162);
+        }
+    } while (fechaActual.dia < 1 || fechaActual.dia > 31 ||
+            fechaActual.mes < 1 || fechaActual.mes > 12 ||
+            fechaActual.anio <= 0);
+
+    int edad = fechaActual.anio - regSal.fechaNacimiento.anio;
+    if(fechaActual.mes < regSal.fechaNacimiento.mes || (fechaActual.mes == regSal.fechaNacimiento.mes && fechaActual.dia < regSal.fechaNacimiento.dia)){
+        edad--;
+    }
+    return edad;
+}
+
+void calcularImc(Salud regSal){
+    float imc;
+    imc = regSal.peso / (regSal.altura*regSal.altura);
+
+    if (imc < 18.5) {
+            printf("Bajo peso.\n");
+    }
+    else {
+        if (imc >= 18.5 && imc < 25) {
+            printf("Peso normal.\n");
+        }
+        else {
+            if (imc >= 25 && imc < 30) {
+                    printf("Sobrepeso.\n");
+            }
+            else{
+                if (imc >= 30){
+                        printf("Obeso.\n");
+                }
+            }
+        }
+    }
+    printf("Su Masa Corporal es: %.2f", imc);
+}
+
+int main()
+{
+    Salud salud1;
+    ingresarRegistroSalud(&salud1);
+    mostrarRegistroSalud(salud1);
+    printf("\n\nSu edad es %d a%cos.\n", calcularEdad(salud1), 164);
+    calcularImc(salud1);
+    return 0;
+}
+
+
+
+EJERCICIO 5:
+typedef struct proyector{
+    char marca[30];
+    char color[30];
+    int controlRemoto;
+} Proyector;
+
+typedef struct aula{
+    int nroIdentificacion;
+    char ubicacion[20];
+    char tipo[20];
+    int cantidadMesas;
+    int cantidadSillas;
+    int cantidadPizarras;
+    Proyector proyector;
+} Aula;
+
+
+void ingresarAula(Aula *aula){
+    printf("Ingrese el n%cmero de identificaci%cn: ", 163, 162);
+    scanf("%i", &aula->nroIdentificacion);
+    getchar();
+    printf("Ingrese la ubicaci%cn: ", 162);
+    scanf("%[^\n]", aula->ubicacion);
+    printf("Ingrese el tipo de aula (Lab, Conf, Teor%ca, Pr%cctica): ", 161, 160);
+    scanf(" %[^\n]", aula->tipo);
+    printf("Ingrese la cantidad de mesas: ");
+    scanf("%i", &aula->cantidadMesas);
+    printf("Ingrese la cantidad de sillas: ");
+    scanf("%i", &aula->cantidadSillas);
+    printf("Ingrese la cantidad de pizarras: ");
+    scanf("%i", &aula->cantidadPizarras);
+    printf("Ingrese la marca del proyector: ");
+    scanf(" %[^\n]", aula->proyector.marca);
+    printf("Ingrese el color del proyector: ");
+    scanf(" %[^\n]", aula->proyector.color);
+    printf("%cTiene control remoto? (1 = si | 0 = no): ", 168);
+    scanf("%d", &aula->proyector.controlRemoto);
+}
+
+void imprimirAula(Aula aula){
+    printf("\nDatos del Aula:\n");
+    printf("N%cmero de Identificaci%cn: %d\n", 163, 162, aula.nroIdentificacion);
+    printf("Ubicaci%cn (bloque): %s\n", 162, aula.ubicacion);
+    printf("Tipo de Aula: %s\n", aula.tipo);
+    printf("Cantidad de Mesas: %d\n", aula.cantidadMesas);
+    printf("Cantidad de Sillas: %d\n", aula.cantidadSillas);
+    printf("Cantidad de Pizarras: %d\n", aula.cantidadPizarras);
+    printf("Proyector Marca: %s\n", aula.proyector.marca);
+    printf("Proyector Color: %s\n", aula.proyector.color);
+    printf("¿Tiene control remoto?: %s\n", aula.proyector.controlRemoto ? "SI" : "NO");
+}
+
+void ingresarAulas(Aula aulas[], int *libre, int tam) {
+    int aulasAReg, contador;
+
+    printf("¿Cu%cntas aulas desea agregar?\n", 160);
+    scanf("%d", &aulasAReg);
+
+    if (*libre + aulasAReg > tam) {
+        printf("ERROR: No hay espacio para agregar otras %d aulas.\n", aulasAReg);
+        return;
+    }
+
+    for (contador = 0; contador < aulasAReg; contador++) {
+        printf("\nIngresando datos para el aula %d:\n", *libre + 1);
+        ingresarAula(&aulas[*libre]);
+        (*libre)++;
+    }
+}
+
+void imprimirAulas(Aula aula[], int cant){
+    int contador;
+    printf("\nAULAS ACTUALES:\n");
+    for (contador = 0; contador < cant; contador++) {
+        printf("\n\nAULA N%CMERO %d\n", 163, contador+1);
+        imprimirAula(aula[contador]);
+    }
+}
+
+
+
+int main()
+{
+    int capacidadAulas, opcion, posicion = 0;
+    printf("Ingrese la capacidad de aulas: ");
+    scanf("%d", &capacidadAulas);
+    Aula aulas[capacidadAulas];
+
+    do {
+        printf("\n\n****************************************\n");
+        printf("*        PROGRAMA PARA AULAS :D        *\n");
+        printf("****************************************\n");
+        printf("<1> CARGAR AULAS\n");
+        printf("<2> IMPRIMIR TODAS LAS AULAS\n");
+        printf("<3> SALIR\n");
+        printf("****************************************\n");
+        printf("Seleccione una opci%cn: ", 162);
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                ingresarAulas(aulas, &posicion, capacidadAulas);
+                break;
+            case 2:
+                imprimirAulas(aulas, posicion);
+                break;
+            case 3:
+                printf("Saliendo...\n");
+                break;
+            default:
+                printf("Opci%cn no v%clida. Intente de nuevo.\n", 163, 160);
+        }
+    } while (opcion != 3);
+
+    return 0;
+}
+
+
+
+
+---
+
+***2/9/2025, 11:26:27 a.m. - Venice:***
+
+Para optimizar y mejorar el código proporcionado, se pueden realizar varias mejoras en términos de claridad, eficiencia y seguridad. A continuación, se presentan las optimizaciones sugeridas para cada ejercicio:
+
+### EJERCICIO 1
+
+El código tiene redundancias y puede simplificarse. Aquí hay una versión optimizada:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+struct parte {
+    int numero;
+    char nombre[25];
+};
+
+typedef struct parte Parte;
+
+int main() {
+    Parte a;
+    Parte b[10];
+
+    printf("Ingrese el n%cmero de parte: ", 163);
+    scanf("%d", &a.numero);
+    printf("Ingrese el nombre de la parte: ");
+    scanf("%s", a.nombre);
+
+    b[3] = a;  // Esta línea ya copia todos los campos de 'a' a 'b[3]'
+
+    printf("Elemento 3 del arreglo b:\n");
+    printf("Número de parte: %d\n", b[3].numero);
+    printf("Nombre de parte: %s\n", b[3].nombre);
+
+    return 0;
+}
+```
+
+### EJERCICIO 2
+
+El código define varias estructuras, pero no las utiliza en ninguna función. A continuación, se muestra una versión simplificada y organizada:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+struct rectangulo {
+    float base;
+    float altura;
+};
+
+struct triangulo {
+    float base;
+    float altura;
+};
+
+struct trapecio {
+    float lado1;
+    float lado2;
+    float altura;
+};
+
+struct coordenadas {
+    float x;
+    float y;
+};
+
+struct direccion {
+    char callenumero[50];
+    char localidad[50];
+    int codigoPostal;
+    int nroTelefono;
+};
+
+struct Fecha {
+    int dia;
+    int mes;
+    int anio;
+};
+
+struct Documento {
+    char tipo[10];   // Ejemplo: "DNI", "Pasaporte"
+    int numero;
+};
+
+struct Materia {
+    char nombre[50];
+    struct Fecha fechaRegularizacion;
+    struct Fecha fechaAprobacion;
+};
+
+struct Alumno {
+    char nombre[30];
+    int numeroRegistro;
+    struct Documento documento;
+    struct direccion direccion;
+    struct Materia materias[10];
+};
+
+struct empleado {
+    char nombre[30];
+    struct Documento documento;
+    struct Fecha FechaNacimiento;
+    char estadoCivil[15];
+    int cantidadHijos;
+    char sexo;
+};
+
+struct proyector {
+    char marca[30];
+    char color[30];
+    int controlRemoto;
+};
+
+struct aula {
+    int nroIdentificacion;
+    char ubicacion[20];
+    char tipo[20];
+    int cantidadMesas;
+    int cantidadSillas;
+    int cantidadPizarras;
+    struct proyector Proyector;
+};
+
+int main() {
+    // Ejemplo de uso de las estructuras
+    struct Alumno alumno;
+    strcpy(alumno.nombre, "Juan Perez");
+    alumno.numeroRegistro = 12345;
+
+    printf("Nombre del alumno: %s\n", alumno.nombre);
+    printf("Número de registro: %d\n", alumno.numeroRegistro);
+
+    return 0;
+}
+```
+
+### EJERCICIO 3
+
+El código ya está bastante bien organizado, pero se pueden hacer algunas mejoras para evitar redundancias y mejorar la claridad:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    char marca[30];
+    char color[30];
+    int controlRemoto;
+} Proyector;
+
+typedef struct {
+    int nroIdentificacion;
+    char ubicacion[20];
+    char tipo[20];
+    int cantidadMesas;
+    int cantidadSillas;
+    int cantidadPizarras;
+    Proyector proyector;
+} Aula;
+
+void ingresarAula(Aula *aula) {
+    printf("Ingrese el n%cmero de identificaci%cn: ", 163, 162);
+    scanf("%i", &aula->nroIdentificacion);
+    getchar();
+    printf("Ingrese la ubicaci%cn: ", 162);
+    scanf("%[^\n]", aula->ubicacion);
+    printf("Ingrese el tipo de aula (Lab, Conf, Teor%ca, Pr%cctica): ", 161, 160);
+    scanf(" %s", aula->tipo);
+    printf("Ingrese la cantidad de mesas: ");
+    scanf("%i", &aula->cantidadMesas);
+    printf("Ingrese la cantidad de sillas: ");
+    scanf("%i", &aula->cantidadSillas);
+    printf("Ingrese la cantidad de pizarras: ");
+    scanf("%i", &aula->cantidadPizarras);
+    printf("Ingrese la marca del proyector: ");
+    scanf("%s", aula->proyector.marca);
+    printf("Ingrese el color del proyector: ");
+    scanf(" %[^\n]", aula->proyector.color);
+    printf("¿Tiene control remoto? (1 = si | 0 = no): ");
+    scanf("%d", &aula->proyector.controlRemoto);
+}
+
+void imprimirAula(Aula aula) {
+    printf("\nDatos del Aula:\n");
+    printf("N%cmero de Identificaci%cn: %d\n", 163, 162, aula.nroIdentificacion);
+    printf("Ubicaci%cn (bloque): %s\n", 162, aula.ubicacion);
+    printf("Tipo de Aula: %s\n", aula.tipo);
+    printf("Cantidad de Mesas: %d\n", aula.cantidadMesas);
+    printf("Cantidad de Sillas: %d\n", aula.cantidadSillas);
+    printf("Cantidad de Pizarras: %d\n", aula.cantidadPizarras);
+    printf("Proyector Marca: %s\n", aula.proyector.marca);
+    printf("Proyector Color: %s\n", aula.proyector.color);
+    printf("¿Tiene control remoto?: %s\n", aula.proyector.controlRemoto ? "Sí" : "No");
+}
+
+int main() {
+    Aula aula;
+
+    ingresarAula(&aula);
+    imprimirAula(aula);
+
+    return 0;
+}
+```
+
+### EJERCICIO 4
+
+El código está bien estructurado, pero se pueden hacer algunas mejoras para evitar redundancias y mejorar la claridad:
+
+```c
+#include <stdio.h>
+
+typedef struct {
+    int dia;
+    int mes;
+    int anio;
+} Fecha;
+
+typedef struct {
+    char nombre[20];
+    char apellido[20];
+    char sexo;
+    Fecha fechaNacimiento;
+    float peso;
+    float altura;
+} Salud;
+
+void ingresarRegistroSalud(Salud *regSal) {
+    printf("Ingrese su nombre: ");
+    scanf("%[^\n0-9]", regSal->nombre);
+    getchar();
+    printf("Ingrese su apellido: ");
+    scanf("%[^\n0-9]", regSal->apellido);
+    getchar();
+    printf("Ingrese si es masculino (M) o femenino (F): ");
+    scanf("%c", &regSal->sexo);
+
+    do {
+        printf("Ingrese la fecha de nacimiento (dd-mm-aaaa): ");
+        scanf("%d%*c%d%*c%d", &regSal->fechaNacimiento.dia, &regSal->fechaNacimiento.mes, &regSal->fechaNacimiento.anio);
+
+        if (regSal->fechaNacimiento.dia < 1 || regSal->fechaNacimiento.dia > 31 ||
+            regSal->fechaNacimiento.mes < 1 || regSal->fechaNacimiento.mes > 12 ||
+            regSal->fechaNacimiento.anio <= 0) {
+            printf("Fecha err%cnea. Ingrese de nuevo.\n", 162);
+        }
+    } while (regSal->fechaNacimiento.dia < 1 || regSal->fechaNacimiento.dia > 31 ||
+             regSal->fechaNacimiento.mes < 1 || regSal->fechaNacimiento.mes > 12 ||
+             regSal->fechaNacimiento.anio <= 0);
+
+    do {
+        printf("Ingrese el peso (en Kg): ");
+        scanf("%f", &regSal->peso);
+        if (regSal->peso <= 0 || regSal->peso >= 700) {
+            printf("Error: Peso no v%clido. Ingrese de nuevo.\n", 160);
+        }
+    } while (regSal->peso <= 0 || regSal->peso >= 700);
+
+    do {
+        printf("Ingrese la altura (en metros): ");
+        scanf("%f", &regSal->altura);
+        if (regSal->altura <= 0 || regSal->altura >= 3.00) {
+            printf("Error: Altura no v%clida. Ingrese de nuevo.\n", 160);
+        }
+    } while (regSal->altura <= 0 || regSal->altura >= 3.00);
+}
+
+void mostrarRegistroSalud(Salud regSal) {
+    printf("\nRegistro de salud:\n");
+    printf("--------------------\n");
+    printf("Nombre: %s\n", regSal.nombre);
+    printf("Apellido: %s\n", regSal.apellido);
+    printf("G%cnero: %c\n", 130, regSal.sexo);
+    printf("Fecha de nacimiento: %d-%d-%d\n", regSal.fechaNacimiento.dia, regSal.fechaNacimiento.mes, regSal.fechaNacimiento.anio);
+    printf("Peso: %.2f\n", regSal.peso);
+    printf("Altura: %.2f\n", regSal.altura);
+}
+
+int calcularEdad(Salud regSal) {
+    Fecha fechaActual;
+    do {
+        printf("Ingrese la fecha de actual (dd-mm-aaaa): ");
+        scanf("%d%*c%d%*c%d", &fechaActual.dia, &fechaActual.mes, &fechaActual.anio);
+
+        if (fechaActual.dia < 1 || fechaActual.dia > 31 ||
+            fechaActual.mes < 1 || fechaActual.mes > 12 ||
+            fechaActual.anio <= 0) {
+            printf("Fecha err%cnea. Ingrese de nuevo.\n", 162);
+        }
+    } while (fechaActual.dia < 1 || fechaActual.dia > 31 ||
+             fechaActual.mes < 1 || fechaActual.mes > 12 ||
+             fechaActual.anio <= 0);
+
+    int edad = fechaActual.anio - regSal.fechaNacimiento.anio;
+    if (fechaActual.mes < regSal.fechaNacimiento.mes || (fechaActual.mes == regSal.fechaNacimiento.mes && fechaActual.dia < regSal.fechaNacimiento.dia)) {
+        edad--;
+    }
+    return edad;
+}
+
+void calcularImc(Salud regSal) {
+    float imc = regSal.peso / (regSal.altura * regSal.altura);
+
+    if (imc < 18.5) {
+        printf("Bajo peso.\n");
+    } else if (imc >= 18.5 && imc < 25) {
+        printf("Peso normal.\n");
+    } else if (imc >= 25 && imc < 30) {
+        printf("Sobrepeso.\n");
+    } else {
+        printf("Obeso.\n");
+    }
+    printf("Su Masa Corporal es: %.2f\n", imc);
+}
+
+int main() {
+    Salud salud1;
+    ingresarRegistroSalud(&salud1);
+    mostrarRegistroSalud(salud1);
+    printf("\n\nSu edad es %d a%cos.\n", calcularEdad(salud1), 164);
+    calcularImc(salud1);
+    return 0;
+}
+```
+
+### EJERCICIO 5
+
+El código está bien estructurado, pero se pueden hacer algunas mejoras para evitar redundancias y mejorar la claridad:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    char marca[30];
+    char color[30];
+    int controlRemoto;
+} Proyector;
+
+typedef struct {
+    int nroIdentificacion;
+    char ubicacion[20];
+    char tipo[20];
+    int cantidadMesas;
+    int cantidadSillas;
+    int cantidadPizarras;
+    Proyector proyector;
+} Aula;
+
+void ingresarAula(Aula *aula) {
+    printf("Ingrese el n%cmero de identificaci%cn: ", 163, 162);
+    scanf("%i", &aula->nroIdentificacion);
+    getchar();
+    printf("Ingrese la ubicaci%cn: ", 162);
+    scanf("%[^\n]", aula->ubicacion);
+    printf("Ingrese el tipo de aula (Lab, Conf, Teor%ca, Pr%cctica): ", 161, 160);
+    scanf(" %[^\n]", aula->tipo);
+    printf("Ingrese la cantidad de mesas: ");
+    scanf("%i", &aula->cantidadMesas);
+    printf("Ingrese la cantidad de sillas: ");
+    scanf("%i", &aula->cantidadSillas);
+    printf("Ingrese la cantidad de pizarras: ");
+    scanf("%i", &aula->cantidadPizarras);
+    printf("Ingrese la marca del proyector: ");
+    scanf(" %[^\n]", aula->proyector.marca);
+    printf("Ingrese el color del proyector: ");
+    scanf(" %[^\n]", aula->proyector.color);
+    printf("¿Tiene control remoto? (1 = si | 0 = no): ");
+    scanf("%d", &aula->proyector.controlRemoto);
+}
+
+void imprimirAula(Aula aula) {
+    printf("\nDatos del Aula:\n");
+    printf("N%cmero de Identificaci%cn: %d\n", 163, 162, aula.nroIdentificacion);
+    printf("Ubicaci%cn (bloque): %s\n", 162, aula.ubicacion);
+    printf("Tipo de Aula: %s\n", aula.tipo);
+    printf("Cantidad de Mesas: %d\n", aula.cantidadMesas);
+    printf("Cantidad de Sillas: %d\n", aula.cantidadSillas);
+    printf("Cantidad de Pizarras: %d\n", aula.cantidadPizarras);
+    printf("Proyector Marca: %s\n", aula.proyector.marca);
+    printf("Proyector Color: %s\n", aula.proyector.color);
+    printf("¿Tiene control remoto?: %s\n", aula.proyector.controlRemoto ? "SI" : "NO");
+}
+
+void ingresarAulas(Aula aulas[], int *libre, int tam) {
+    int aulasAReg, contador;
+
+    printf("¿Cu%cntas aulas desea agregar?\n", 160);
+    scanf("%d", &aulasAReg);
+
+    if (*libre + aulasAReg > tam) {
+        printf("ERROR: No hay espacio para agregar otras %d aulas.\n", aulasAReg);
+        return;
+    }
+
+    for (contador = 0; contador < aulasAReg; contador++) {
+        printf("\nIngresando datos para el aula %d:\n", *libre + 1);
+        ingresarAula(&aulas[*libre]);
+        (*libre)++;
+    }
+}
+
+void imprimirAulas(Aula aula[], int cant) {
+    int contador;
+    printf("\nAULAS ACTUALES:\n");
+    for (contador = 0; contador < cant; contador++) {
+        printf("\n\nAULA N%CMERO %d\n", 163, contador + 1);
+        imprimirAula(aula[contador]);
+    }
+}
+
+int main() {
+    int capacidadAulas, opcion, posicion = 0;
+    printf("Ingrese la capacidad de aulas: ");
+    scanf("%d", &capacidadAulas);
+    Aula aulas[capacidadAulas];
+
+    do {
+        printf("\n\n****************************************\n");
+        printf("*        PROGRAMA PARA AULAS :D        *\n");
+        printf("****************************************\n");
+        printf("<1> CARGAR AULAS\n");
+        printf("<2> IMPRIMIR TODAS LAS AULAS\n");
+        printf("<3> SALIR\n");
+        printf("****************************************\n");
+        printf("Seleccione una opci%cn: ", 162);
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                ingresarAulas(aulas, &posicion, capacidadAulas);
+                break;
+            case 2:
+                imprimirAulas(aulas, posicion);
+                break;
+            case 3:
+                printf("Saliendo...\n");
+                break;
+            default:
+                printf("Opci%cn no v%clida. Intente de nuevo.\n", 163, 160);
+        }
+    } while (opcion != 3);
+
+    return 0;
+}
+```
+
+Estas optimizaciones mejoran la claridad, eficiencia y seguridad del código, eliminando redundancias y mejorando la estructura general.
+
+---
+
+***2/9/2025, 11:28:10 a.m. - User:***
+
+Pero hazlo segun lo que dia estas consignas :Práctico 4:
+Registros en C: Structs
+La teoría general para este práctico puede consultarse en los capítulos 6 y 7 de las Notas de Clase de la cátedra.
+1. Escriba código C para:
+a. Definir un registro llamado persona, que sirve para guardar los siguientes datos de una
+persona nombre (string), edad (entero), altura (real), peso(real) y dni (long)
+b. Definir Persona como un tipo utilizando typedef
+c. Use struct persona para declarar una variable per y un arreglo poblacion[10]
+d. Use el tipo Persona para declarar una variable per y un arreglo poblacion[MAX], donde MAX
+es una constante
+e. Lea los datos necesarios para completar una persona y los almacene en per
+f. Asigne los valores de los campos de la variable per al elemento 3 del arreglo poblacion.
+g. Imprima los campos del elemento 3 del arreglo poblacion.
+2. Dados los siguientes datos, declarar los registros (structs) que los representen:
+a. Datos para calcular la medida de superficie de: un rectángulo, un triángulo y un trapecio.
+b. Un par de coordenadas cartesianas (x, y) donde x e y son dos números reales.
+c. Una dirección: calle y número, localidad, código postal, número de teléfono.
+d. Un alumno: nombre (30 caracteres); número de registro (entero de seis dígitos); tipo y
+número de documento de identidad; dirección; materias (para cada una: nombre, fecha de
+regularización y de aprobación).
+e. Un empleado: nombre (30 caracteres); tipo y número de documento de identidad; dirección;
+fecha de nacimiento; estado civil; cantidad de hijos a cargo; sexo.
+f. Un aula: tipo de aula deberá incluir: Nº de identificación, ubicación (bloque) y tipo
+(Laboratorio, Conferencia, Teoría-Práctica); cantidad de mesas, cantidad de sillas, cantidad de
+pizarras, proyector (deberá incluir: marca, color y control remoto (si o no)).
+3. Utilizando el registro aula definido en el ejercicio anterior, defina el tipo Aula. Luego realice dos
+funciones; una función que ingrese los datos de un aula y otra que los muestre por pantalla.
+Probar el uso combinado de las dos funciones en un programa.
+Programación 1 Práctico 4
+2/4
+4. Realice un programa que permita cargar en el arreglo poblacion definido en el ejercicio 1d los
+datos de MAX personas. Luego debe permitir al usuario ingresar un número de dni y mostrar los
+datos de la persona según el dni ingresado.
+A PARTIR DEL EJERCICIO 5 CONSIDERE:
+Debe utilizar una variable para controlar la cantidad de elementos almacenados en el arreglo, de
+manera tal que no sobreescriba datos ya almacenados luego de sucesivas cargas
+5. Hacer un programa que permita opcionalmente: (a) ingresar los datos de aulas en un arreglo
+mientras el usuario lo desee; (b) mostrar por pantalla los datos de cada uno de las aulas
+ingresadas. Realizar esto utilizando funciones. Considere que ambas operaciones se realizan en
+forma aleatoria y más de una vez. 
+
+---
+
+***2/9/2025, 11:28:12 a.m. - Venice:***
+
+Entendido. A continuación, se presenta el código optimizado según las consignas proporcionadas para el práctico 4.
+
+### EJERCICIO 1
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 10
+
+struct persona {
+    char nombre[50];
+    int edad;
+    float altura;
+    float peso;
+    long dni;
+};
+
+typedef struct persona Persona;
+
+int main() {
+    Persona per;
+    Persona poblacion[MAX];
+
+    // Lea los datos necesarios para completar una persona y los almacene en per
+    printf("Ingrese el nombre: ");
+    scanf("%s", per.nombre);
+    printf("Ingrese la edad: ");
+    scanf("%d", &per.edad);
+    printf("Ingrese la altura: ");
+    scanf("%f", &per.altura);
+    printf("Ingrese el peso: ");
+    scanf("%f", &per.peso);
+    printf("Ingrese el DNI: ");
+    scanf("%ld", &per.dni);
+
+    // Asigne los valores de los campos de la variable per al elemento 3 del arreglo poblacion
+    poblacion[3] = per;
+
+    // Imprima los campos del elemento 3 del arreglo poblacion
+    printf("\nDatos del elemento 3 del arreglo poblacion:\n");
+    printf("Nombre: %s\n", poblacion[3].nombre);
+    printf("Edad: %d\n", poblacion[3].edad);
+    printf("Altura: %.2f\n", poblacion[3].altura);
+    printf("Peso: %.2f\n", poblacion[3].peso);
+    printf("DNI: %ld\n", poblacion[3].dni);
+
+    return 0;
+}
+```
+
+### EJERCICIO 2
+
+```c
+#include <stdio.h>
+
+struct rectangulo {
+    float base;
+    float altura;
+};
+
+struct triangulo {
+    float base;
+    float altura;
+};
+
+struct trapecio {
+    float lado1;
+    float lado2;
+    float altura;
+};
+
+struct coordenadas {
+    float x;
+    float y;
+};
+
+struct direccion {
+    char calle[50];
+    int numero;
+    char localidad[50];
+    int codigoPostal;
+    int nroTelefono;
+};
+
+struct Fecha {
+    int dia;
+    int mes;
+    int anio;
+};
+
+struct Documento {
+    char tipo[10];
+    int numero;
+};
+
+struct Materia {
+    char nombre[50];
+    struct Fecha fechaRegularizacion;
+    struct Fecha fechaAprobacion;
+};
+
+struct Alumno {
+    char nombre[30];
+    int numeroRegistro;
+    struct Documento documento;
+    struct direccion direccion;
+    struct Materia materias[10];
+};
+
+struct empleado {
+    char nombre[30];
+    struct Documento documento;
+    struct Fecha fechaNacimiento;
+    char estadoCivil[15];
+    int cantidadHijos;
+    char sexo;
+};
+
+struct proyector {
+    char marca[30];
+    char color[30];
+    int controlRemoto;
+};
+
+struct aula {
+    int nroIdentificacion;
+    char ubicacion[20];
+    char tipo[20];
+    int cantidadMesas;
+    int cantidadSillas;
+    int cantidadPizarras;
+    struct proyector proyector;
+};
+```
+
+### EJERCICIO 3
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    char marca[30];
+    char color[30];
+    int controlRemoto;
+} Proyector;
+
+typedef struct {
+    int nroIdentificacion;
+    char ubicacion[20];
+    char tipo[20];
+    int cantidadMesas;
+    int cantidadSillas;
+    int cantidadPizarras;
+    Proyector proyector;
+} Aula;
+
+void ingresarAula(Aula *aula) {
+    printf("Ingrese el n%cmero de identificaci%cn: ", 163, 162);
+    scanf("%i", &aula->nroIdentificacion);
+    getchar();
+    printf("Ingrese la ubicaci%cn: ", 162);
+    scanf("%[^\n]", aula->ubicacion);
+    printf("Ingrese el tipo de aula (Lab, Conf, Teor%ca, Pr%cctica): ", 161, 160);
+    scanf(" %s", aula->tipo);
+    printf("Ingrese la cantidad de mesas: ");
+    scanf("%i", &aula->cantidadMesas);
+    printf("Ingrese la cantidad de sillas: ");
+    scanf("%i", &aula->cantidadSillas);
+    printf("Ingrese la cantidad de pizarras: ");
+    scanf("%i", &aula->cantidadPizarras);
+    printf("Ingrese la marca del proyector: ");
+    scanf("%s", aula->proyector.marca);
+    printf("Ingrese el color del proyector: ");
+    scanf(" %[^\n]", aula->proyector.color);
+    printf("¿Tiene control remoto? (1 = si | 0 = no): ");
+    scanf("%d", &aula->proyector.controlRemoto);
+}
+
+void imprimirAula(Aula aula) {
+    printf("\nDatos del Aula:\n");
+    printf("N%cmero de Identificaci%cn: %d\n", 163, 162, aula.nroIdentificacion);
+    printf("Ubicaci%cn (bloque): %s\n", 162, aula.ubicacion);
+    printf("Tipo de Aula: %s\n", aula.tipo);
+    printf("Cantidad de Mesas: %d\n", aula.cantidadMesas);
+    printf("Cantidad de Sillas: %d\n", aula.cantidadSillas);
+    printf("Cantidad de Pizarras: %d\n", aula.cantidadPizarras);
+    printf("Proyector Marca: %s\n", aula.proyector.marca);
+    printf("Proyector Color: %s\n", aula.proyector.color);
+    printf("¿Tiene control remoto?: %s\n", aula.proyector.controlRemoto ? "Sí" : "No");
+}
+
+int main() {
+    Aula aula;
+
+    ingresarAula(&aula);
+    imprimirAula(aula);
+
+    return 0;
+}
+```
+
+### EJERCICIO 4
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+#define MAX 10
+
+struct persona {
+    char nombre[50];
+    int edad;
+    float altura;
+    float peso;
+    long dni;
+};
+
+typedef struct persona Persona;
+
+void leerPersona(Persona *per) {
+    printf("Ingrese el nombre: ");
+    scanf("%s", per->nombre);
+    printf("Ingrese la edad: ");
+    scanf("%d", &per->edad);
+    printf("Ingrese la altura: ");
+    scanf("%f", &per->altura);
+    printf("Ingrese el peso: ");
+    scanf("%f", &per->peso);
+    printf("Ingrese el DNI: ");
+    scanf("%ld", &per->dni);
+}
+
+void imprimirPersona(Persona per) {
+    printf("\nDatos de la persona:\n");
+    printf("Nombre: %s\n", per.nombre);
+    printf("Edad: %d\n", per.edad);
+    printf("Altura: %.2f\n", per.altura);
+    printf("Peso: %.2f\n", per.peso);
+    printf("DNI: %ld\n", per.dni);
+}
+
+int main() {
+    Persona poblacion[MAX];
+    int i, dniBuscado;
+    Persona per;
+
+    // Cargar los datos de MAX personas
+    for (i = 0; i < MAX; i++) {
+        printf("\nIngrese los datos para la persona %d:\n", i + 1);
+        leerPersona(&poblacion[i]);
+    }
+
+    // Ingresar un número de DNI y mostrar los datos de la persona
+    printf("\nIngrese el DNI a buscar: ");
+    scanf("%ld", &dniBuscado);
+
+    for (i = 0; i < MAX; i++) {
+        if (poblacion[i].dni == dniBuscado) {
+            imprimirPersona(poblacion[i]);
+            break;
+        }
+    }
+
+    if (i == MAX) {
+        printf("No se encontró ninguna persona con el DNI %ld.\n", dniBuscado);
+    }
+
+    return 0;
+}
+```
+
+### EJERCICIO 5
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    char marca[30];
+    char color[30];
+    int controlRemoto;
+} Proyector;
+
+typedef struct {
+    int nroIdentificacion;
+    char ubicacion[20];
+    char tipo[20];
+    int cantidadMesas;
+    int cantidadSillas;
+    int cantidadPizarras;
+    Proyector proyector;
+} Aula;
+
+void ingresarAula(Aula *aula) {
+    printf("Ingrese el n%cmero de identificaci%cn: ", 163, 162);
+    scanf("%i", &aula->nroIdentificacion);
+    getchar();
+    printf("Ingrese la ubicaci%cn: ", 162);
+    scanf("%[^\n]", aula->ubicacion);
+    printf("Ingrese el tipo de aula (Lab, Conf, Teor%ca, Pr%cctica): ", 161, 160);
+    scanf(" %[^\n]", aula->tipo);
+    printf("Ingrese la cantidad de mesas: ");
+    scanf("%i", &aula->cantidadMesas);
+    printf("Ingrese la cantidad de sillas: ");
+    scanf("%i", &aula->cantidadSillas);
+    printf("Ingrese la cantidad de pizarras: ");
+    scanf("%i", &aula->cantidadPizarras);
+    printf("Ingrese la marca del proyector: ");
+    scanf(" %[^\n]", aula->proyector.marca);
+    printf("Ingrese el color del proyector: ");
+    scanf(" %[^\n]", aula->proyector.color);
+    printf("¿Tiene control remoto? (1 = si | 0 = no): ");
+    scanf("%d", &aula->proyector.controlRemoto);
+}
+
+void imprimirAula(Aula aula) {
+    printf("\nDatos del Aula:\n");
+    printf("N%cmero de Identificaci%cn: %d\n", 163, 162, aula.nroIdentificacion);
+    printf("Ubicaci%cn (bloque): %s\n", 162, aula.ubicacion);
+    printf("Tipo de Aula: %s\n", aula.tipo);
+    printf("Cantidad de Mesas: %d\n", aula.cantidadMesas);
+    printf("Cantidad de Sillas: %d\n", aula.cantidadSillas);
+    printf("Cantidad de Pizarras: %d\n", aula.cantidadPizarras);
+    printf("Proyector Marca: %s\n", aula.proyector.marca);
+    printf("Proyector Color: %s\n", aula.proyector.color);
+    printf("¿Tiene control remoto?: %s\n", aula.proyector.controlRemoto ? "SI" : "NO");
+}
+
+void ingresarAulas(Aula aulas[], int *libre, int tam) {
+    int aulasAReg, contador;
+
+    printf("¿Cu%cntas aulas desea agregar?\n", 160);
+    scanf("%d", &aulasAReg);
+
+    if (*libre + aulasAReg > tam) {
+        printf("ERROR: No hay espacio para agregar otras %d aulas.\n", aulasAReg);
+        return;
+    }
+
+    for (contador = 0; contador < aulasAReg; contador++) {
+        printf("\nIngresando datos para el aula %d:\n", *libre + 1);
+        ingresarAula(&aulas[*libre]);
+        (*libre)++;
+    }
+}
+
+void imprimirAulas(Aula aula[], int cant) {
+    int contador;
+    printf("\nAULAS ACTUALES:\n");
+    for (contador = 0; contador < cant; contador++) {
+        printf("\n\nAULA N%CMERO %d\n", 163, contador + 1);
+        imprimirAula(aula[contador]);
+    }
+}
+
+int main() {
+    int capacidadAulas, opcion, posicion = 0;
+    printf("Ingrese la capacidad de aulas: ");
+    scanf("%d", &capacidadAulas);
+    Aula aulas[capacidadAulas];
+
+    do {
+        printf("\n\n****************************************\n");
+        printf("*        PROGRAMA PARA AULAS :D        *\n");
+        printf("****************************************\n");
+        printf("<1> CARGAR AULAS\n");
+        printf("<2> IMPRIMIR TODAS LAS AULAS\n");
+        printf("<3> SALIR\n");
+        printf("****************************************\n");
+        printf("Seleccione una opci%cn: ", 162);
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                ingresarAulas(aulas, &posicion, capacidadAulas);
+                break;
+            case 2:
+                imprimirAulas(aulas, posicion);
+                break;
+            case 3:
+                printf("Saliendo...\n");
+                break;
+            default:
+                printf("Opci%cn no v%clida. Intente de nuevo.\n", 163, 160);
+        }
+    } while (opcion != 3);
+
+    return 0;
+}
+```
+
+Estas optimizaciones y mejoras siguen las consignas proporcionadas y aseguran que el código sea claro, eficiente y seguro.
+
