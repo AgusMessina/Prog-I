@@ -435,6 +435,212 @@ int main() {
 
 
 EJERCICIO 4:
-CON FORMATO:
+#include <string.h>
+
+#define MAX_LINEA 1024
+
+/** PROBAR 3 CASOS con archivocomp1 y archivocomp2:
+-ARCHIVO 1 > ARCHIVO 2 EN LÍNEAS:
+ARCHIVO 1: Hola
+Esto es una prueba
+Linea extra en archivo1
+ARCHIVO 2: Hola
+Esto es una prueba
+
+
+-ARCHIVO 2 > ARCHIVO 1
+ARCHIVO 1: Hola
+Linea común
+ARCHIVO 2: Hola
+Linea común
+Linea extra en archivo2
+
+
+-ARCHIVO 1 == ARCHIVO 2 Y NO DIFIEREN NADA
+ARCHIVO 1: Primera línea
+Segunda línea
+Tercera línea
+ARCHIVO 2: Primera línea
+Segunda línea
+Tercera línea
+
+
+-ARCHIVO 1 == ARCHIVO 2 Y DIFIEREN
+ARCHIVO 1: Línea 1 igual
+Línea 2 diferente en archivo1
+Línea 3 igual
+ARCHIVO 2: Línea 1 igual
+Línea 2 diferente en archivo2
+Línea 3 igual
+*/
+
+
+void compararArchivos(FILE *fp1, FILE *fp2) {
+    char linea1[MAX_LINEA];
+    char linea2[MAX_LINEA];
+    int numLinea = 1;
+
+    while (1) {
+        char *res1 = fgets(linea1, MAX_LINEA, fp1);
+        char *res2 = fgets(linea2, MAX_LINEA, fp2);
+
+        // CASO 1: SON IGUALES
+        if (res1 == NULL && res2 == NULL) {
+            printf("Archivos iguales.\n");
+            break;
+        }
+
+        // CASO 2: UNO TIENE MÁS LÍNEAS QUE EL OTRO
+        if ((res1 == NULL && res2 != NULL) || (res1 != NULL && res2 == NULL)) {
+            printf("Los archivos difieren en la l%cnea %d:\n", 161, numLinea);
+            printf("Archivo 1: %s", res1 ? linea1 : "<SIN LINEA>\n");
+            printf("Archivo 2: %s", res2 ? linea2 : "<SIN LINEA>\n");
+            break;
+        }
+
+        // CASO 3: MISMA CANTIDAD DE LÍNEAS, DIFERENTE CONTENIDO
+        // Sacar \n que puede dar error
+        int len1 = strlen(linea1);
+        if (len1 > 0 && linea1[len1-1] == '\n') linea1[len1-1] = '\0';
+        int len2 = strlen(linea2);
+        if (len2 > 0 && linea2[len2-1] == '\n') linea2[len2-1] = '\0';
+
+        if (strcmp(linea1, linea2) != 0) {
+            printf("Los archivos difieren en la l%cnea %d:\n", 161, numLinea);
+            printf("Archivo 1: %s\n", linea1);
+            printf("Archivo 2: %s\n", linea2);
+            break;
+        }
+        numLinea++;
+    }
+}
+
+int main(int argc, char *argv[]) {
+    FILE *fp1, *fp2;
+    char archivo1[51], archivo2[51];
+
+    printf("Ingrese nombre del primer archivo: ");
+    scanf("%50s", archivo1);
+
+    printf("Ingrese nombre del segundo archivo: ");
+    scanf("%50s", archivo2);
+
+    fp1 = fopen(archivo1, "r");
+    fp2 = fopen(archivo2, "r");
+
+    if (fp1 == NULL || fp2 == NULL) {
+        printf("Error abriendo archivos.\n");
+        return 1;
+    }
+
+    compararArchivos(fp1, fp2);
+
+    fclose(fp1);
+    fclose(fp2);
+    return 0;
+}
+
+
+
+
+EJERCICIO 5:
+PARA PILA ESTÁTICA EJERCICIO 4 TP 7 + MAIN PRUEBA:
+#define MAX 100
+
+typedef struct {
+    int elementos[MAX];
+    int tope;
+} PilaEst;
+
+void init(PilaEst *p) {
+    p->tope = -1;
+}
+
+int isEmpty(PilaEst p) {
+    return p.tope == -1;
+}
+
+int isFull(PilaEst p) {
+    return p.tope == MAX - 1;
+}
+
+void apilar(PilaEst *p, int nro) {
+    if (!isFull(*p)) {
+        p->tope++;
+        p->elementos[p->tope] = nro;
+    } else {
+        printf("La pila est%c llena.\n", 160);
+    }
+}
+
+void desapilar(PilaEst *p) {
+    if (!isEmpty(*p)) {
+        p->tope--;
+    } else {
+        printf("La pila est%c vac%ca.\n", 160, 161);
+    }
+}
+
+int top(PilaEst p) {
+    return p.elementos[p.tope];
+}
+
+void imprimir_pila(PilaEst p) {
+    printf("Elementos en la pila (de tope a base): ");
+    while (!isEmpty(p)) {
+        printf("%d ", top(p));
+        desapilar(&p);
+    }
+    printf("\n");
+}
+
+void guardar_pila_en_archivo(PilaEst p, const char *nombreArchivo) {
+    FILE *archivo = fopen(nombreArchivo, "w");
+    if (archivo == NULL) {
+        perror("Error al abrir archivo para guardar la pila");
+        return;
+    }
+
+    // Guardar cada elemento por línea, del tope hacia abajo
+    while (!isEmpty(p)) {
+        fprintf(archivo, "%d\n", top(p));
+        desapilar(&p);
+    }
+    fclose(archivo);
+    printf("Pila guardada correctamente en %s\n", nombreArchivo);
+}
+
+int main() {
+    PilaEst pilaEnteros;
+    init(&pilaEnteros);
+
+    apilar(&pilaEnteros, 10);
+    apilar(&pilaEnteros, 20);
+    apilar(&pilaEnteros, 30);
+    apilar(&pilaEnteros, 40);
+    apilar(&pilaEnteros, 50);
+    apilar(&pilaEnteros, 60);
+    apilar(&pilaEnteros, 70);
+
+    imprimir_pila(pilaEnteros);
+
+    printf("Elemento superior: %d\n", top(pilaEnteros));
+
+    desapilar(&pilaEnteros);
+    printf("Elemento superior despu%cs de la supresi%cn: %d\n", 130, 162, top(pilaEnteros));
+    imprimir_pila(pilaEnteros);
+
+    desapilar(&pilaEnteros);
+    printf("Elemento superior despu%cs de la supresi%cn: %d\n", 130, 162, top(pilaEnteros));
+    imprimir_pila(pilaEnteros);
+
+    desapilar(&pilaEnteros);
+    printf("Elemento superior despu%cs de la supresi%cn: %d\n", 130, 162, top(pilaEnteros));
+    imprimir_pila(pilaEnteros);
+
+    guardar_pila_en_archivo(pilaEnteros, "backup.txt");
+
+    return 0;
+}
 
 
