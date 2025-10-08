@@ -644,3 +644,223 @@ int main() {
 }
 
 
+MENÚ dinámico:
+int main() {
+    PilaEst pilaEnteros;
+    int opcion;
+    int valor;
+
+    init(&pilaEnteros);
+
+    do {
+        printf("Menu:\n");
+        printf("1. Apilar un n%cmero\n", 163);
+        printf("2. Mostrar elemento tope\n");
+        printf("3. Desapilar Pila\n");
+        printf("4. Imprimir tope\n");
+        printf("5. Guardar pila en archivo backup.txt\n");
+        printf("6. Salir\n");
+        printf("Elija opci%cn: ", 162);
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                if(!isFull(pilaEnteros)){
+                printf("Ingrese n%cmero a apilar: ", 163);
+                scanf("%d", &valor);
+                apilar(&pilaEnteros, valor);
+                }
+                else printf("ERROR. LA PILA ESTA LLENA.");
+                printf("\n\n");
+                break;
+            case 2:
+                if(!isEmpty(pilaEnteros)) printf("TOPE: %d\n\n", top(pilaEnteros));
+                else printf("ERROR. LA PILA ESTA VACIA.");
+                printf("\n\n");
+                break;
+            case 3:
+                if(!isEmpty(pilaEnteros)){
+                    desapilar(&pilaEnteros);
+                    printf("Elemento superior despu%cs de la supresi%cn: %d\n", 130, 162, top(pilaEnteros));
+                    imprimir_pila(pilaEnteros);
+                }
+                else printf("ERROR. LA PILA ESTA VACIA.");
+                printf("\n\n");
+                break;
+            case 4:
+                if(!isEmpty(pilaEnteros)) imprimir_pila(pilaEnteros);
+                else printf("ERROR. LA PILA ESTA VACIA.");
+                printf("\n\n");
+                break;
+            case 5:
+                if(!isEmpty(pilaEnteros)){
+                guardar_pila_en_archivo(pilaEnteros, "backup.txt");
+                printf("\n\n");
+                }
+                else printf("ERROR. LA PILA ESTA VACIA. \n\n");
+                break;
+            case 6:
+                printf("Saliendo...\n");
+                break;
+            default:
+                printf("Opci%cn inv%clida. Intente de nuevo.\n", 162, 160);
+        }
+    } while (opcion != 6);
+
+    return 0;
+}
+
+
+
+
+FILA ESTÁTICA:
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 100
+
+typedef struct {
+    char elementos[MAX];
+    int ultimo;
+} FilaEst;
+
+
+void initFila(FilaEst *f) {
+    f->ultimo = -1;
+}
+
+int isEmpty(FilaEst f) {
+    return f.ultimo == -1;
+}
+
+int isFull(FilaEst f) {
+    return f.ultimo == MAX - 1;
+}
+
+int insertF(FilaEst *f, char elemento) {
+    if (isFull(*f)) return -1;
+        f->ultimo++;
+        f->elementos[f->ultimo] = elemento;
+        return 1;
+}
+
+int supress(FilaEst *f) {
+    if (isEmpty(*f)) return -1;
+    int i,n;
+    n=f->ultimo;
+    for (i=0; i<n; i++) {
+        f->elementos[i] = f->elementos[i + 1];
+     }
+    f->ultimo--;
+    return 1;
+}
+
+char copyF(FilaEst f){
+    return f.elementos[0];
+}
+
+void imprimirFila(FilaEst f) {
+    if (isEmpty(f)) {
+        printf("La fila est%c vac%ca.\n", 160, 161);
+        return;
+    }
+    printf("Fila actual: ");
+    while (!isEmpty(f)) {
+        printf("%c ", copyF(f));
+        supress(&f);
+    }
+    printf("\n");
+}
+
+void guardar_fila_en_archivo(FilaEst f, const char *nombreArchivo) {
+    FILE *archivo = fopen(nombreArchivo, "w");
+    if (archivo == NULL) {
+        perror("Error al abrir archivo para guardar la fila");
+        return;
+    }
+    while (!isEmpty(f)) {
+        fprintf(archivo, "%c\n", copyF(f));
+        supress(&f);
+    }
+    fclose(archivo);
+    printf("Fila guardada correctamente en %s\n", nombreArchivo);
+}
+
+int main() {
+    FilaEst filaChar;
+    int opcion;
+    char valor;
+
+    initFila(&filaChar);
+
+    do {
+        printf("Menu:\n");
+        printf("1. Insertar un caracter en la fila\n");
+        printf("2. Mostrar elemento al frente\n");
+        printf("3. Suprimir elemento del frente\n");
+        printf("4. Imprimir toda la fila\n");
+        printf("5. Guardar fila en archivo backup.txt\n");
+        printf("6. Salir\n");
+        printf("Elija opci%cn: ", 162);
+        scanf(" %d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                if (!isFull(filaChar)) {
+                    printf("Ingrese un caracter a insertar: ");
+                    scanf(" %c", &valor);
+                    insertF(&filaChar, valor);
+                } else {
+                    printf("ERROR. LA PILA ESTA LLENA.");
+                }
+                printf("\n\n");
+                break;
+            case 2:
+                if (!isEmpty(filaChar)) {
+                    printf("Frente de la fila: %c\n", copyF(filaChar));
+                } else {
+                    printf("ERROR. LA PILA ESTA VACIA.");
+                }
+                printf("\n\n");
+                break;
+            case 3:
+                if (!isEmpty(filaChar)) {
+                    char sup = copyF(filaChar);
+                    supress(&filaChar);
+                    printf("Elemento suprimido del frente: %c\n", sup);
+                } else {
+                    printf("ERROR. LA PILA ESTA VACIA.");
+                }
+                printf("\n\n");
+                break;
+            case 4:
+                if(!isEmpty(filaChar)) imprimirFila(filaChar);
+                else printf("ERROR. LA PILA ESTA VACIA.");
+                printf("\n\n");
+                break;
+            case 5:
+                if (!isEmpty(filaChar)) {
+                    guardar_fila_en_archivo(filaChar, "backup.txt");
+                } else {
+                    printf("ERROR. LA PILA ESTA VACIA.");
+                }
+                printf("\n\n");
+                break;
+            case 6:
+                printf("Saliendo...\n");
+                break;
+            default:
+                printf("Opci%cn inv%clida. Intente de nuevo.\n", 162, 160);
+        }
+    } while (opcion != 6);
+
+    return 0;
+}
+
+
+
+
+LISTA ESTÁTICA:
+
+
+
+
