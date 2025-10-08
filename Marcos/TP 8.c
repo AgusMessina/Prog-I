@@ -332,3 +332,109 @@ int main() {
 
 
 EJERCICIO 3:
+CON FORMATO:
+#include <stdio.h>
+#include <stdlib.h>
+
+void filtrarPares(const char *archivoEntrada, const char *archivoSalida) {
+    FILE *aentrada = fopen(archivoEntrada, "r");
+    if (aentrada == NULL) {
+        perror("No se pudo abrir el archivo de entrada");
+        return;
+    }
+
+    FILE *asalida = fopen(archivoSalida, "w");
+    if (asalida == NULL) {
+        perror("No se pudo abrir el archivo de salida");
+        fclose(asalida);
+        return;
+    }
+
+    float numero;
+    while (fscanf(aentrada, "%f", &numero) == 1) {
+        int parteEntera = (int)numero;
+        if (parteEntera % 2 == 0) {
+            fprintf(asalida, "%.2f\n", numero);
+        }
+    }
+
+    fclose(aentrada);
+    fclose(asalida);
+}
+
+int main() {
+    const char *archivoEntrada = "costos.txt";
+    const char *archivoSalida = "pares.txt";
+
+    filtrarPares(archivoEntrada, archivoSalida);
+
+    printf("Proceso finalizado. Los n%cmeros pares est%cn en %s\n", 163, 160, archivoSalida);
+    return 0;
+}
+
+
+SIN FORMATO:
+#include <stdio.h>
+#include <stdlib.h>
+
+
+/** PRIMERO CREAR EL .DAT
+int main() {
+    const char *archivo = "costos.dat";
+    FILE *f = fopen(archivo, "wb");
+    if (f == NULL) {
+        perror("Error al crear costos.dat");
+        return 1;
+    }
+    float numeros[10] = {12.4, 7.5, 8.0, 3.1, 20.0, 16.2, 5.6, 10.0, 25.0, 4.8};
+    fwrite(numeros, sizeof(float), 10, f);
+    fclose(f);
+    printf("Archivo costos.dat creado con 10 n%cmeros en formato binario.\n", 163);
+    return 0;
+}
+*/
+
+
+void filtrarParesBin(const char *archivoEntrada, const char *archivoSalida) {
+    FILE *archEntrada = fopen(archivoEntrada, "rb");
+    if (archEntrada == NULL) {
+        perror("No se pudo abrir el archivo binario de entrada");
+        return;
+    }
+
+    FILE *archSalida = fopen(archivoSalida, "wb");
+    if (archSalida == NULL) {
+        perror("No se pudo abrir el archivo binario de salida");
+        fclose(archSalida);
+        return;
+    }
+
+    float numero;
+    while (fread(&numero, sizeof(float), 1, archEntrada) == 1) {
+        int parteEntera = (int)numero;
+        if (parteEntera % 2 == 0) {
+            fwrite(&numero, sizeof(float), 1, archSalida);
+        }
+    }
+
+    fclose(archEntrada);
+    fclose(archSalida);
+}
+
+int main() {
+    const char *archivoEntrada = "costos.dat";
+    const char *archivoSalida = "pares.dat";
+
+    filtrarParesBin(archivoEntrada, archivoSalida);
+
+    printf("Proceso finalizado. Los n%cmeros pares est%cn en %s (formato binario).\n", 163, 160, archivoSalida);
+    return 0;
+}
+
+
+
+
+EJERCICIO 4:
+CON FORMATO:
+
+
