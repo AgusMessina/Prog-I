@@ -860,6 +860,366 @@ int main() {
 
 
 LISTA ESTÁTICA:
+#include <stdio.h>
+#include <stdlib.h>
+
+#define N 5
+
+typedef struct {
+    int datos[N];
+    int cur;
+    int ultimo;
+} ListaE;
+
+void initL(ListaE *l) {
+    l->ultimo = -1;
+    l->cur = 0;
+}
+
+int isOos(ListaE l) {
+    return l.cur > l.ultimo;
+}
+
+int isEmpty(ListaE l) {
+    return l.ultimo == -1;
+}
+
+int isFull(ListaE l) {
+    return l.ultimo == N - 1;
+}
+
+void reset(ListaE *l) {
+    l->cur = 0;
+}
+
+void forwards(ListaE *l) {
+    if (!isOos(*l))
+        l->cur++;
+}
+
+int insertLista(ListaE *l, int elemento) {
+    if (isFull(*l)) return -1;
+
+    for (int i = l->ultimo; i >= l->cur; i--) {
+        l->datos[i + 1] = l->datos[i];
+    }
+    l->datos[l->cur] = elemento;
+    l->ultimo++;
+    return 1;
+}
+
+int supressLista(ListaE *l) {
+    if (isEmpty(*l)) return -1;
+    if (isOos(*l)) return -2;
+
+    for (int i = l->cur; i < l->ultimo; i++) {
+        l->datos[i] = l->datos[i + 1];
+    }
+    l->ultimo--;
+    return 1;
+}
+
+int copyLista(ListaE l) {
+    return l.datos[l.cur];
+}
+
+void imprimirLista(ListaE lista) {
+    if (isEmpty(lista)) {
+        printf("La lista est%c vac%ca.\n", 160, 161);
+    } else {
+        printf("Lista completa:\n");
+        reset(&lista);
+        int contador = 0;
+        while (!isOos(lista)) {
+            printf("Elemento %d: %d\n", contador + 1, copyLista(lista));
+            forwards(&lista);
+            contador++;
+        }
+    }
+}
+
+void guardar_lista_en_archivo(ListaE lista, const char *nombreArchivo) {
+    FILE *archivo = fopen(nombreArchivo, "w");
+    if (archivo == NULL) {
+        perror("Error al abrir archivo para guardar la lista");
+        return;
+    }
+    reset(&lista);
+    while (!isOos(lista)) {
+        fprintf(archivo, "%d\n", copyLista(lista));
+        forwards(&lista);
+    }
+    fclose(archivo);
+    printf("Lista guardada correctamente en %s\n", nombreArchivo);
+}
+
+int main() {
+    ListaE lista;
+    initL(&lista);
+    int opcion;
+    int valor;
+
+    do {
+        printf("Menu:\n");
+        printf("1. Insertar un n%cmero en la lista (donde apunte el cursor)\n", 163);
+        printf("2. Mostrar elemento (cursor)\n");
+        printf("3. Suprimir elemento (cursor)\n");
+        printf("4. Imprimir lista completa\n");
+        printf("5. Guardar lista en archivo backup.txt\n");
+        printf("6. Salir\n");
+        printf("Elija opci%cn: ", 162);
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                if (!isFull(lista)) {
+                    printf("Ingrese n%cmero a insertar: ", 163);
+                    scanf("%d", &valor);
+                    if (insertLista(&lista, valor) == 1) {
+                        printf("Elemento insertado correctamente.\n");
+                    } else {
+                        printf("Error al insertar elemento.\n");
+                    }
+                } else {
+                    printf("ERROR. LA LISTA ESTA LLENA.");
+                }
+                printf("\n\n");
+                break;
+            case 2:
+                if (!isEmpty(lista) && !isOos(lista)) {
+                    printf("Elemento en cursor: %d\n", copyLista(lista));
+                } else {
+                    printf("Cursor fuera de rango o lista vac%ca.\n", 161);
+                }
+                printf("\n\n");
+                break;
+            case 3:
+                if (!isEmpty(lista) && !isOos(lista)) {
+                    if (supressLista(&lista) == 1) {
+                        printf("Elemento suprimido (cursor).\n");
+                    } else {
+                        printf("Error al suprimir elemento.\n");
+                    }
+                } else {
+                    printf("Cursor fuera de rango o lista vac%ca.\n", 161);
+                }
+                printf("\n\n");
+                break;
+            case 4:
+                imprimirLista(lista);
+                printf("\n\n");
+                break;
+            case 5:
+                if (!isEmpty(lista)) {
+                    guardar_lista_en_archivo(lista, "backup.txt");
+                } else {
+                    printf("ERROR. LA LISTA ESTA VACIA.");
+                }
+                printf("\n\n");
+                break;
+            case 6:
+                printf("Saliendo...\n");
+                break;
+            default:
+                printf("Opci%cn inv%clida. Intente de nuevo.\n", 162, 160);
+        }
+    } while (opcion != 6);
+
+    return 0;
+}
+
+
+
+
+PILA DINÁMICA:
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct nodo {
+    int dato;
+    struct nodo *siguiente;
+} Nodo;
+
+typedef struct {
+    Nodo *tope;
+} Pila;
+
+void init(Pila *p) {
+    p->tope = NULL;
+}
+
+int isEmpty(Pila p) {
+    return (p.tope == NULL);
+}
+
+int isFull(Pila p) {
+    Nodo *nuevoNodo = (Nodo *)malloc(sizeof(Nodo));
+    if (nuevoNodo == NULL) return 1;
+    free(nuevoNodo);
+    return 0;
+}
+
+int push(Pila *p, int e) {
+    if (isFull(*p)) return -1; // pila llena
+
+    Nodo *nuevoNodo = (Nodo *)malloc(sizeof(Nodo));
+    if (nuevoNodo == NULL) return -1;
+
+    nuevoNodo->dato = e;
+    nuevoNodo->siguiente = p->tope;
+    p->tope = nuevoNodo;
+    return 1;
+}
+
+int pop(Pila *p) {
+    if (isEmpty(*p)) return -1; // pila vacía
+
+    Nodo *eliminar = p->tope;
+    p->tope = eliminar->siguiente;
+    free(eliminar);
+    return 1;
+}
+
+int copyPila(Pila p) {
+    if (isEmpty(p)) return -1; // pila vacía, no hay dato
+    return p.tope->dato;
+}
+
+Nodo* copiarNodos(Nodo *origen) {
+    if (origen == NULL)
+        return NULL;
+
+    // Copiar recursivamente
+    Nodo *nuevo = malloc(sizeof(Nodo));
+    if(!nuevo) {
+        perror("Error al copiar nodo");
+        exit(1);
+    }
+
+    nuevo->dato = origen->dato;
+    nuevo->siguiente = copiarNodos(origen->siguiente);
+    return nuevo;
+}
+
+void imprimirPila(Pila p) {
+    // Crear copia profunda de la pila
+    Pila pCopia;
+    pCopia.tope = copiarNodos(p.tope);
+
+    while (!isEmpty(pCopia)) {
+        int dato = copyPila(pCopia);
+        printf("%d ", dato);
+        pop(&pCopia);
+    }
+    printf("\n");
+}
+
+
+void liberarPila(Pila *p) {
+    while (!isEmpty(*p)) {
+        pop(p);
+    }
+}
+
+void guardar_pila_en_archivo(Pila p, const char *nombreArchivo) {
+    FILE *archivo = fopen(nombreArchivo, "w");
+    if (archivo == NULL) {
+        perror("Error al abrir archivo");
+        return;
+    }
+
+    Pila pCopia = p;
+    while (!isEmpty(pCopia)) {
+        fprintf(archivo, "%d\n", copyPila(pCopia));
+        pop(&pCopia);
+    }
+
+    fclose(archivo);
+    printf("Pila guardada correctamente en %s\n", nombreArchivo);
+}
+
+int main() {
+    Pila pilaEnteros;
+    int opcion;
+    int valor;
+
+    init(&pilaEnteros);
+
+    do {
+        printf("Menu:\n");
+        printf("1. Apilar un n%cmero\n", 163);
+        printf("2. Mostrar elemento tope\n");
+        printf("3. Desapilar Pila\n");
+        printf("4. Imprimir pila\n");
+        printf("5. Guardar pila en archivo backup.txt\n");
+        printf("6. Salir\n");
+        printf("Elija opci%cn: ", 162);
+        scanf("%d", &opcion);
+
+        switch (opcion) {
+            case 1:
+                if (!isFull(pilaEnteros)) {
+                    printf("Ingrese n%cmero a apilar: ", 163);
+                    scanf("%d", &valor);
+                    push(&pilaEnteros, valor);
+                } else {
+                    printf("ERROR. LA PILA ESTA LLENA.");
+                }
+                printf("\n\n");
+                break;
+            case 2:
+                if (!isEmpty(pilaEnteros)) {
+                    printf("TOPE: %d\n", copyPila(pilaEnteros));
+                } else {
+                    printf("ERROR. LA PILA ESTA VACIA.");
+                }
+                printf("\n\n");
+                break;
+            case 3:
+                if (!isEmpty(pilaEnteros)) {
+                    pop(&pilaEnteros);
+                    if (!isEmpty(pilaEnteros)) {
+                        printf("Elemento superior despu%cs de la supresi%cn: %d\n", 130, 162, copyPila(pilaEnteros));
+                    } else {
+                        printf("La pila est%c vac%c despu%cs de la supresi%cn.\n", 160, 161, 130, 162);
+                    }
+                    imprimirPila(pilaEnteros);
+                } else {
+                    printf("ERROR. LA PILA ESTA VACIA.");
+                }
+                printf("\n\n");
+                break;
+            case 4:
+                if (!isEmpty(pilaEnteros)) {
+                    imprimirPila(pilaEnteros);
+                } else {
+                    printf("ERROR. LA PILA ESTA VACIA.");
+                }
+                printf("\n\n");
+                break;
+            case 5:
+                if (!isEmpty(pilaEnteros)) {
+                    guardar_pila_en_archivo(pilaEnteros, "backup.txt");
+                } else {
+                    printf("ERROR. LA PILA ESTA VACIA.");
+                }
+                printf("\n\n");
+                break;
+            case 6:
+                liberarPila(&pilaEnteros);
+                printf("Saliendo...\n");
+                break;
+            default:
+                printf("Opci%cn inv%clida. Intente de nuevo.\n", 162, 160);
+                break;
+        }
+        printf("\n\n");
+    } while (opcion != 6);
+
+    return 0;
+}
+
+
 
 
 
